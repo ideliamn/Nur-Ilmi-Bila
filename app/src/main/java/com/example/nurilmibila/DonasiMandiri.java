@@ -17,6 +17,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class DonasiMandiri extends AppCompatActivity {
     EditText et_nominal;
     TextView tv_path;
     ImageButton btn_selectImage;
+    ImageView iv_buktiDonasi;
     String nominal;
     Bitmap imgBukti;
     Button btn_submit;
@@ -65,6 +67,7 @@ public class DonasiMandiri extends AppCompatActivity {
         btn_selectImage = findViewById(R.id.btn_selectImage);
         btn_submit = findViewById(R.id.btn_submit);
         btn_next = findViewById(R.id.btn_next);
+        iv_buktiDonasi = findViewById(R.id.iv_buktiDonasi);
 
         nominal = et_nominal.getText().toString();
 
@@ -168,8 +171,9 @@ public class DonasiMandiri extends AppCompatActivity {
                 //getting selected image path into path textview
                 String path_photo_id = data.getData().getPath();
                 tv_path.setText(path_photo_id);
-                //getting selected image into bitmap
+                //getting selected image into bitmap and show it in imageview
                 imgBukti = MediaStore.Images.Media.getBitmap(getContentResolver(),mFilePathUri);
+                iv_buktiDonasi.setImageBitmap(imgBukti);
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this,e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -183,8 +187,6 @@ public class DonasiMandiri extends AppCompatActivity {
             nominal = et_nominal.getText().toString();
             Bitmap imgBukti = MediaStore.Images.Media.getBitmap(getContentResolver(),mFilePathUri);
             Intent intent = new Intent(getApplicationContext(),DonasiBerhasil.class);
-            intent.putExtra("nominal", nominal);
-            //intent.putExtra("imgBukti", imgBukti);
             startActivity(intent);
         } catch (IOException e) {
             Toast.makeText(this,e.getMessage(), Toast.LENGTH_SHORT).show();
